@@ -5,9 +5,9 @@ const data = {
 const options = {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
-  body: data,
+  body: JSON.stringify(data),
 };
 
 fetch('/api', options);
