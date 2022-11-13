@@ -1,12 +1,15 @@
-const data = {
-  name: 'BearTheCoder',
-}
+function testCommand() {
+  const data = {
+    Name: "BearTheCoder",
+  };
 
-const options = {
-  method: "POST", 
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(data)
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: data
+  };
+
+  fetch('/api', options).then(() => console.log("Data Sent!..."));
 }
-fetch('/api', options)
