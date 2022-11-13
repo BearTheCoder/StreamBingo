@@ -11,5 +11,5 @@ function testCommand() {
     body: JSON.stringify(data),
   };
 
-  fetch('/api', options);
+  fetch('/api', options).then(() => console.log("data sent.."));
 }
