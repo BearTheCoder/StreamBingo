@@ -2,14 +2,112 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twitch Bingo</title>
+  <link rel="shortcut icon" href="#">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <h1>TEST FOR REAL</h1>
+  <div id="container">
+    <div id="BingoContainer">
+      <div id="LeftHand">
+        <div id="LeftHandHead">
+          <h2 id="PageHeader">Streams Loaded: 0</h2>
+          <h4 id="LoadedUser">Load streams to get stream information.</h4>
+        </div>
+        <div id="twitch-embed">
+          <div id="TE_Row1">
+            <label for="MaxViewCount">Max Viewers: </label>
+            <input placeholder="Leave blank for no filtering..." type="number" name="MaxViewCount" id="MaxViewCount">
+          </div>
+          <div id="HorizontalGap"></div>
+          <div id="Te_Row2">
+            <label for="CategoryInput">Category: </label>
+            <input placeholder="Leave blank for no filtering..." type="text" name="CategoryInput" id="CategoryInput">
+          </div>
+          <div id="HorizontalGap"></div>
+          <div id="Te_Row3">
+            <label for="LanguageSelect">Language: </label>
+            <select name="LanguageSelect" id="LanguageSelect" disabled="true">
+              <option value="English">English</option>
+              <!-- Add more languages when you can -->
+            </select>
+          </div>
+          <div id="HorizontalGap"></div>
+          <button id="LoadStreamsButton" onclick="LoadStreamsButtonClick()">Load Streams</button>
+        </div>
+        <div id="HorizontalGap"></div>
+        <div id="ButtonAreaLH">
+          <button id="NextButton" onclick="NextButtonClick()">Next Streamer</button>
+          <div id="VerticalGap"></div>
+          <button id="ResetStreamsButton" onclick="ResetStreamsButtonClick()">Reset Streams</button>
+        </div>
+      </div>
+      <div id="VerticalGap"></div>
+      <div id="RightHand">
+        <div id="BingoHeader_Top">
+          <h3>B</h3>
+          <h3>I</h3>
+          <h3>N</h3>
+          <h3>G</h3>
+          <h3>O</h3>
+        </div>
+        <div id="BingoHeader">
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+        </div>
+        <div id="BingoHeader">
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+        </div>
+        <div id="BingoHeader">
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+        </div>
+        <div id="BingoHeader">
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+        </div>
+        <div id="BingoHeader">
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+          <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
+        </div>
+        <div id="HorizontalGap"></div>
+        <div id="ButtonArea">
+          <button id="StartBingoButton" onclick="StartBingoButtonClick()">Start Bingo Card</button>
+          <div id="VerticalGap"></div>
+          <button id="RandomizeBingoCardButton" onclick="RandomBingoButtonClick()">Randomize Bingo Card</button>
+          <div id="VerticalGap"></div>
+          <button id="ResetBingoCardButton" onclick="ResetBingoButtonClick()">Reset Bingo Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+<!-- SCRIPTS -->
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
+<script src="twitchbingo.js"></script>
+<script src="DefaultBingoCardArray.js"></script>
 
 </html>
