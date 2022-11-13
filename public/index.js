@@ -11,5 +11,5 @@ function testCommand() {
     body: data,
   };
 
-  fetch('/api', options).then(() => console.log("Data Sent!..."));
+  fetch('/api', options);
 }
