@@ -1,6 +1,6 @@
 function testCommand() {
   const data = {
-    Name: "BearTheCoder",
+    name: "BearTheCoder",
   };
 
   const options = {
@@ -8,7 +8,7 @@ function testCommand() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: data
+    body: data,
   };
 
   fetch('/api', options).then(() => console.log("Data Sent!..."));
