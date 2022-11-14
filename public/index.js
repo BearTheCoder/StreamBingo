@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 const loadStreamsButton = document.getElementById('loadStreamsButton');
 const nextStreamButton = document.getElementById('nextStreamButton');
 const resetStreamsButton = document.getElementById('resetStreamsButton');
@@ -28,16 +30,21 @@ function loadStreams() {
   fetch('/startStreams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
-      const gameName = jsonResponse.streams[0].game_name;
-      const viewerCount = jsonResponse.streams[0].viewer_count;
-      const userName = jsonResponse.streams[0].user_name;
-      const loadedInfoNode = document.getElementById("LoadedUser");
-      loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
-      document.getElementById("twitch-embed").innerHTML = '';
-      new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-      document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
-      streamArray = jsonResponse.streams;
-      nextStreamButton.disabled = false;
+      if (jsonResponse.status === "success") {
+        const gameName = jsonResponse.streams[0].game_name;
+        const viewerCount = jsonResponse.streams[0].viewer_count;
+        const userName = jsonResponse.streams[0].user_name;
+        const loadedInfoNode = document.getElementById("LoadedUser");
+        loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
+        document.getElementById("twitch-embed").innerHTML = '';
+        new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+        document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
+        streamArray = jsonResponse.streams;
+        nextStreamButton.disabled = false;
+      }
+      else if (jsonResponse.status === "failure") {
+        alert("Search query returned no results, please try a different term.");
+      }
     });
   resetStreamsButton.disabled = false;
   let timeToLoad = 90;

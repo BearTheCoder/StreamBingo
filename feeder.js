@@ -1,4 +1,5 @@
 require('dotenv').config;
+const { response } = require('express');
 const express = require("express");
 const app = express();
 app.listen(process.env.PORT, () => console.log("listening...")); // Railway Deploy
@@ -7,6 +8,8 @@ app.use(express.json());
 let categories = [];
 let stopLoading = false;
 let responseTime = 90000;
+
+let debugCounter = 0; // Delete Later ************************************
 
 app.post('/startStreams', (request, response) => {
   let streamArray = [];
@@ -22,7 +25,7 @@ app.post('/startStreams', (request, response) => {
       if (request.body.searchQuery !== "") getCategories(request.body.searchQuery, headers);
       else {
         getStreams(headers, streamArray, "", request.body.maxViewers);
-        responseTimout(response);
+        responseTimout(response, "success");
       }
     });
 });
@@ -37,11 +40,19 @@ function getCategories(searchQuery, headers) {
         categories.push(Node.name);
       }
       if (categories.length !== 0) getStreams(headers, streamArray, "", request.body.maxViewers);
-      else stopLoading = true;
+      else {
+        stopLoading = true;
+        responseTime = 1000;
+        responseTimout(response, "failure");
+      }
     });
 }
 
 function getStreams(headers, streamArray, pageNo, maxViewers) {
+  //delete
+  debugCounter++;
+  console.log(`getStreams called ${debugCounter} times...`);
+  //end
   if (pageNo !== undefined && !stopLoading) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
@@ -64,11 +75,12 @@ function getStreams(headers, streamArray, pageNo, maxViewers) {
   }
 }
 
-function responseTimout(response) {
+function responseTimout(response, status) {
   setTimeout(() => {
     stopLoading = true;
     console.log(`Loading Finalized. Total Streams: ${streamArray.length}`);
     response.json({
+      status: status,
       streams: streamArray
     });
   }, responseTime);
