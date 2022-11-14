@@ -17,7 +17,7 @@ app.post('/startStreams', (request, response) => {
       const authorization = `${NewTokenType} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, }; //Railway
 
-      if (request.body.searchQuery !== "") categories = getCategories(request.body.searchQuery, headers);
+      if (request.body.searchQuery !== "") getCategories(request.body.searchQuery, headers);
 
       getStreams(headers, streamArray, "", request.body.maxViewers);
       setTimeout(() => {
@@ -40,7 +40,6 @@ function getCategories(searchQuery, headers) {
       for (let Node of DataObject.data) {
         categories.push(Node.name);
       }
-      return categories;
     });
 }
 
@@ -53,7 +52,7 @@ function getStreams(headers, streamArray, pageNo, maxViewers) {
       .then((res) => res.json())
       .then((dataObject) => {
         for (let user of dataObject.data) {
-          if (categories.length === undefined) {
+          if (categories.length !== 0) {
             if ((user.viewer_count <= maxViewers) && categories.includes(user.game_name)) {
               streamArray.push(user);
             }
