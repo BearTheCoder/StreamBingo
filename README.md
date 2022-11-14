@@ -1,4 +1,4 @@
-<!-- ![Logo](https://cdn.discordapp.com/attachments/1034769812372602950/1034769851509637210/Berry_Bot_copy-1.png) -->
+![Logo](https://discord.com/channels/988489593466810398/1013489547419590759/1041838860071604264)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Discord](https://img.shields.io/discord/1034695813026283580?color=%235865F2&label=Discord&logo=Discord)](https://discord.gg/DuMJjretE2)
 ![Version](https://img.shields.io/badge/version-0.5.0-ff69b4)
