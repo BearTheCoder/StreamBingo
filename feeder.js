@@ -58,6 +58,7 @@ function getCategories(searchQuery, headers) {
 }
 
 function getStreams(headers, streamArray, pageNo) {
+  console.log('Reached...');
   if (pageNo !== undefined) {
     console.log(`Loaded Streams: ${streamArray.length}`);
     let streamsEndpoint = "";
