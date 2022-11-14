@@ -1,6 +1,3 @@
-const { json } = require("express");
-
-const loadStreamsButton = document.getElementById('loadStreamsButton');
 const nextStreamButton = document.getElementById('nextStreamButton');
 const resetStreamsButton = document.getElementById('resetStreamsButton');
 const startCardButton = document.getElementById('startCardButton');
