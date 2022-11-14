@@ -38,7 +38,10 @@ function getCategories(searchQuery, headers, postRequest, postResponse, streamAr
       for (let Node of DataObject.data) {
         categories.push(Node.name);
       }
-      if (categories.length !== 0) getStreams(headers, streamArray, "", postRequest.body.maxViewers);
+      if (categories.length !== 0) {
+        getStreams(headers, streamArray, "", postRequest.body.maxViewers);
+        responseTimout(postResponse, "success", streamArray);
+      }
       else {
         stopLoading = true;
         responseTime = 1000;
