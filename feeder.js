@@ -21,7 +21,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, }; //Railway
 
-      if (postRequest.body.searchQuery !== "") getCategories(postRequest.body.searchQuery, headers, postResponse, streamArray);
+      if (postRequest.body.searchQuery !== "") getCategories(postRequest.body.searchQuery, headers, postRequest, postResponse, streamArray);
       else {
         getStreams(headers, streamArray, "", postRequest.body.maxViewers);
         responseTimout(postResponse, "success", streamArray);
@@ -29,7 +29,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
     });
 });
 
-function getCategories(searchQuery, headers, postResponse, streamArray) {
+function getCategories(searchQuery, headers, postRequest, postResponse, streamArray) {
   categories = [];
   let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${searchQuery}`;
   fetch(categoryEndpoint, { headers })
@@ -38,7 +38,7 @@ function getCategories(searchQuery, headers, postResponse, streamArray) {
       for (let Node of DataObject.data) {
         categories.push(Node.name);
       }
-      if (categories.length !== 0) getStreams(headers, streamArray, "", request.body.maxViewers);
+      if (categories.length !== 0) getStreams(headers, streamArray, "", postRequest.body.maxViewers);
       else {
         stopLoading = true;
         responseTime = 1000;
