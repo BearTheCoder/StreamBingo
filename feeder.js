@@ -12,6 +12,8 @@ let debugCounter = 0; // Delete Later ************************************
 
 app.post('/startStreams', (postRequest, postResponse) => {
   let streamArray = [];
+  stopLoading = false;
+  responseTime = 90000;
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
     .then(res => res.json())

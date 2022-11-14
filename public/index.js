@@ -11,7 +11,8 @@ resetStreamsButton.disabled = true;
 resetCardButton.disabled = true;
 
 function loadStreams() {
-  const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : document.getElementById('MaxViewCount').value;
+  const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
+  maxViewers >= 1 ? maxViewers : 1;
   const searchQuery = document.getElementById("CategoryInput").value;
   streamArray = [];
   const data = {
