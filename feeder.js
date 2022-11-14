@@ -22,7 +22,7 @@ app.post('/startStreams', (request, response) => {
       getStreams(headers, streamArray, "");
       setTimeout(() => {
         stopLoading = true;
-        console.log(`Total Streams: ${streamArray}`);
+        console.log(`Loacing Finalized. Total Streams: ${streamArray.length}`);
         response.json({
           streams: streamArray
         });
@@ -57,7 +57,7 @@ function getStreams(headers, streamArray, pageNo) {
               streamArray.push(user);
             }
           }
-          else {
+          else if ((user.viewer_count <= request.body.maxViewers)) {
             streamArray.push(user);
           }
         }
