@@ -58,25 +58,24 @@ function getCategories(searchQuery, headers) {
 }
 
 function getStreams(headers, streamArray, pageNo) {
-  let streamsEndpoint = "";
-  if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
-  else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${pageNo}`;
-  fetch(streamsEndpoint, { headers })
-    .then((res) => res.json())
-    .then((dataObject) => {
-      for (let user of dataObject.data) {
-        if (categories.length > 0) {
-          if ((user.viewer_count <= request.body.maxViewers) && categories.includes(user.game_name)) {
+  if (pageNo !== undefined) {
+    let streamsEndpoint = "";
+    if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
+    else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${pageNo}`;
+    fetch(streamsEndpoint, { headers })
+      .then((res) => res.json())
+      .then((dataObject) => {
+        for (let user of dataObject.data) {
+          if (categories.length > 0) {
+            if ((user.viewer_count <= request.body.maxViewers) && categories.includes(user.game_name)) {
+              streamArray.push(user);
+            }
+          }
+          else {
             streamArray.push(user);
           }
         }
-        else {
-          streamArray.push(user);
-        }
-      }
-      if (pageNo !== undefined && !stopLoading) {
         getStreams(headers, streamArray, dataObject.pagination.cursor);
-      }
-
-    });
+      });
+  }
 }
