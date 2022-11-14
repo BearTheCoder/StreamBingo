@@ -1,4 +1,3 @@
-// *****     Global Variables     *****
 const loadStreamsButton = document.getElementById('loadStreamsButton');
 const nextStreamButton = document.getElementById('nextStreamButton');
 const resetStreamsButton = document.getElementById('resetStreamsButton');
@@ -8,7 +7,6 @@ const resetCardButton = document.getElementById('resetCardButton');
 const defaultScreen = document.getElementById('twitch-embed').innerHTML;
 let streamArray = [];
 
-// *****     Default Button Accessibility     *****
 nextStreamButton.disabled = true;
 resetStreamsButton.disabled = true;
 resetCardButton.disabled = true;
@@ -19,10 +17,6 @@ function loadStreams() {
   const data = {
     maxViewers: maxViewers,
     searchQuery: searchQuery,
-    // // Delete Later ****************************
-    // ClientID: ClientID,
-    // ClientSecret: ClientSecret,
-    // // End *************************************
   };
   const options = {
     method: 'POST',
@@ -51,11 +45,8 @@ function loadStreams() {
   setInterval(() => {
     tempTimer.innerHTML = `<h4 id="tempTimer">Loading Streams ${timeToLoad--} seconds left...</h4>`;
   }, 1000);
-
-
 };
 
-// *****     Stream Button Functions     *****
 function loadNextStream() {
   let RandNum = Math.floor(Math.random() * streamArray.length);
   document.getElementById("LoadedUser").innerHTML =
@@ -71,7 +62,6 @@ function resetStreams() {
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
 }
 
-// *****     Bingo Card Button Functions     *****
 function generateRandomBingoCard() {
   let bingoSquares = document.querySelectorAll("textarea");
   let duplicateArray = [];
