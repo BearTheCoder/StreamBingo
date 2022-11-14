@@ -38,7 +38,6 @@ function getCategories(searchQuery, headers) {
     .then((DataObject) => {
       console.log(DataObject.data);
       for (let Node of DataObject.data) {
-        console.log(Node);
         categories.push(Node.name);
       }
       return categories;
