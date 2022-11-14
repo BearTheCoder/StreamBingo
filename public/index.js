@@ -26,24 +26,26 @@ function loadStreams() {
     body: JSON.stringify(data),
   };
   fetch('/startStreams', options) //post
-    .then(promise => promise.json()
-      .then(jsonResponse => {
-        document.getElementById("LoadedUser").innerHTML =
-          `${jsonResponse.streams[0].user_name} is streaming ${jsonResponse.streams[0].game_name} to ${jsonResponse.streams[0].viewer_count} viewers.`;
-        document.getElementById("twitch-embed").innerHTML = '';
-        new Twitch.Player(document.getElementById("twitch-embed"), { channel: jsonResponse.streams[0].user_login });
-        document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
-        streamArray = jsonResponse.streams;
-        nextStreamButton.disabled = false;
-      }));
+    .then(promise => promise.json())
+    .then(jsonResponse => {
+      const gameName = jsonResponse.streams[0].game_name;
+      const viewerCount = jsonResponse.streams[0].viewer_count;
+      const userName = jsonResponse.streams[0].user_name;
+      const loadedInfoNode = document.getElementById("LoadedUser");
+      loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
+      document.getElementById("twitch-embed").innerHTML = '';
+      new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+      document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
+      streamArray = jsonResponse.streams;
+      nextStreamButton.disabled = false;
+    });
   resetStreamsButton.disabled = false;
   let timeToLoad = 90;
   const timer = document.getElementById("twitch-embed");
-  timer.innerHTML = `<br>
-        <img src="loading-gif.gif" width="100" /> <h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
+  timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
   let tempTimer = document.getElementById('tempTimer');
   setInterval(() => {
-    tempTimer.innerHTML = `<h4 id="tempTimer">Loading Streams ${timeToLoad--} seconds left...</h4>`;
+    tempTimer.innerText = `Loading Streams ${timeToLoad--} seconds left...`;
   }, 1000);
 };
 

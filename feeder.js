@@ -36,7 +36,9 @@ function getCategories(searchQuery, headers) {
   fetch(categoryEndpoint, { headers })
     .then((res) => res.json())
     .then((DataObject) => {
+      console.log(DataObject.data);
       for (let Node of DataObject.data) {
+        console.log(Node);
         categories.push(Node.name);
       }
       return categories;
