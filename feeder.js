@@ -54,7 +54,7 @@ function getStreams(headers, streamArray, pageNo, maxViewers) {
       .then((res) => res.json())
       .then((dataObject) => {
         for (let user of dataObject.data) {
-          if (categories.length > 0) {
+          if (categories.length === undefined) {
             if ((user.viewer_count <= maxViewers) && categories.includes(user.game_name)) {
               streamArray.push(user);
             }
