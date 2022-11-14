@@ -59,6 +59,7 @@ function getCategories(searchQuery, headers) {
 
 function getStreams(headers, streamArray, pageNo) {
   if (pageNo !== undefined) {
+    console.log(`Loaded Streams: ${streamArray.length}`);
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
     else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${pageNo}`;
