@@ -38,7 +38,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
 
 function getCategories(feederObject, headers) {
   feederObject.categories = [];
-  let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${feederObject.request.searchQuery}`;
+  let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${feederObject.request.body.searchQuery}`;
   fetch(categoryEndpoint, { headers })
     .then(res => res.json())
     .then(dataObject => {
@@ -67,11 +67,11 @@ function getStreams(feederObject, headers) {
       .then(dataObject => {
         for (let user of dataObject.data) {
           if (feederObject.categories.length !== 0) {
-            if (user.viewer_count <= feederObject.maxViewers && feederObject.categories.includes(user.game_name)) {
+            if (user.viewer_count <= feederObject.request.body.maxViewers && feederObject.categories.includes(user.game_name)) {
               feederObject.streamArray.push(user);
             }
           }
-          else if (user.viewer_count <= feederObject.maxViewers) {
+          else if (user.viewer_count <= feederObject.request.body.maxViewers) {
             feederObject.streamArray.push(user);
           }
         }
