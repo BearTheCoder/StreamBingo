@@ -45,7 +45,7 @@ function getCategories(feederObject, headers) {
       for (let category of dataObject.data) {
         feederObject.categories.push(category.name);
       }
-      if (feederObjectcategories.length !== 0) {
+      if (feederObject.categories.length !== 0) {
         getStreams(feederObject, headers);
         responseTimout(feederObject, "success");
       }
