@@ -1,5 +1,4 @@
 require('dotenv').config;
-const { response } = require('express');
 const express = require("express");
 const app = express();
 app.listen(process.env.PORT, () => console.log("listening...")); // Railway Deploy
@@ -11,7 +10,7 @@ let responseTime = 90000;
 
 let debugCounter = 0; // Delete Later ************************************
 
-app.post('/startStreams', (request, response) => {
+app.post('/startStreams', (postRequest, postResponse) => {
   let streamArray = [];
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
@@ -22,15 +21,15 @@ app.post('/startStreams', (request, response) => {
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, }; //Railway
 
-      if (request.body.searchQuery !== "") getCategories(request.body.searchQuery, headers);
+      if (postRequest.body.searchQuery !== "") getCategories(postRequest.body.searchQuery, headers, postResponse);
       else {
-        getStreams(headers, streamArray, "", request.body.maxViewers);
-        responseTimout(response, "success");
+        getStreams(headers, streamArray, "", postRequest.body.maxViewers);
+        responseTimout(postResponse, "success", streamArray);
       }
     });
 });
 
-function getCategories(searchQuery, headers) {
+function getCategories(searchQuery, headers, postResponse) {
   categories = [];
   let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${searchQuery}`;
   fetch(categoryEndpoint, { headers })
@@ -43,7 +42,7 @@ function getCategories(searchQuery, headers) {
       else {
         stopLoading = true;
         responseTime = 1000;
-        responseTimout(response, "failure");
+        responseTimout(postResponse, "failure", []);
       }
     });
 }
@@ -75,11 +74,12 @@ function getStreams(headers, streamArray, pageNo, maxViewers) {
   }
 }
 
-function responseTimout(response, status) {
+function responseTimout(postResponse, status, streamArray) {
   setTimeout(() => {
+    if (status = "success") console.log(`Loading Finalized. Total Streams: ${streamArray.length}`);
+    else if (status = "failure") console.log(`Load ended in failure, sent alert to client...`);
     stopLoading = true;
-    console.log(`Loading Finalized. Total Streams: ${streamArray.length}`);
-    response.json({
+    postResponse.json({
       status: status,
       streams: streamArray
     });
