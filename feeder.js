@@ -76,9 +76,9 @@ function getStreams(headers, streamArray, pageNo, maxViewers) {
 
 function responseTimout(postResponse, status, streamArray) {
   setTimeout(() => {
+    stopLoading = true;
     if (status === "success") console.log(`Loading Finalized. Total Streams: ${streamArray.length}`);
     else if (status === "failure") console.log(`Load ended in failure, sent alert to client...`);
-    stopLoading = true;
     postResponse.json({
       status: status,
       streams: streamArray
