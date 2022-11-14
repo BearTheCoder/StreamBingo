@@ -18,7 +18,7 @@ app.post('/startStreams', (request, response) => {
   //Do twitch work here.
   let streamArray = [];
 
-  const url = `https://id.twitch.tv/oauth2/token?client_id=${request.body.ClientID}&client_secret=${request.body.ClientSecret}&grant_type=client_credentials`;
+  const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
     .then((res) => res.json())
     .then((authorizationObject) => {
