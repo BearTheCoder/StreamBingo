@@ -13,6 +13,7 @@ resetCardButton.disabled = true;
 function loadStreams() {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : document.getElementById('MaxViewCount').value;
   const searchQuery = document.getElementById("CategoryInput").value;
+  streamArray = [];
   const data = {
     maxViewers: maxViewers,
     searchQuery: searchQuery,
@@ -41,6 +42,7 @@ function loadStreams() {
       }
       else if (jsonResponse.status === "failure") {
         alert("Search query returned no results, please try a different term.");
+        resetStreamHTML();
       }
     });
   resetStreamsButton.disabled = false;
@@ -62,7 +64,7 @@ function loadNextStream() {
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
 }
 
-function resetStreams() {
+function resetStreamHTML() {
   document.getElementById("twitch-embed").innerHTML = defaultScreen;
   document.getElementById("LoadedUser").innerHTML = 'Load streams to get stream information.';
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
