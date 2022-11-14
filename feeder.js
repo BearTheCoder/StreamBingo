@@ -19,7 +19,7 @@ app.post('/startStreams', (request, response) => {
 
       if (request.body.searchQuery !== "") categories = getCategories(request.body.searchQuery, headers);
 
-      getStreams(headers, streamArray, "");
+      getStreams(headers, streamArray, "", request.body.maxViewers);
       setTimeout(() => {
         stopLoading = true;
         console.log(`Loacing Finalized. Total Streams: ${streamArray.length}`);
@@ -43,7 +43,7 @@ function getCategories(searchQuery, headers) {
     });
 }
 
-function getStreams(headers, streamArray, pageNo) {
+function getStreams(headers, streamArray, pageNo, maxViewers) {
   if (pageNo !== undefined) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
@@ -53,15 +53,15 @@ function getStreams(headers, streamArray, pageNo) {
       .then((dataObject) => {
         for (let user of dataObject.data) {
           if (categories.length > 0) {
-            if ((user.viewer_count <= request.body.maxViewers) && categories.includes(user.game_name)) {
+            if ((user.viewer_count <= maxViewers) && categories.includes(user.game_name)) {
               streamArray.push(user);
             }
           }
-          else if ((user.viewer_count <= request.body.maxViewers)) {
+          else if ((user.viewer_count <= maxViewers)) {
             streamArray.push(user);
           }
         }
-        getStreams(headers, streamArray, dataObject.pagination.cursor);
+        getStreams(headers, streamArray, dataObject.pagination.cursor, maxViewers);
       });
   }
 }
