@@ -4,16 +4,19 @@ const app = express();
 app.listen(process.env.PORT, () => console.log("listening...")); // Railway Deploy
 app.use(express.static('public'));
 app.use(express.json());
-let categories = [];
-let stopLoading = false;
-let responseTime = 90000;
-
-let debugCounter = 0; // Delete Later ************************************
 
 app.post('/startStreams', (postRequest, postResponse) => {
-  let streamArray = [];
-  stopLoading = false;
-  responseTime = 90000;
+
+  let feederObject = {
+    request: postRequest,
+    response: postResponse,
+    streamArray: [],
+    categories: [],
+    stopLoading: false,
+    responseTime: 90000,
+    pageNo: "",
+  };
+
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
     .then(res => res.json())
@@ -21,72 +24,71 @@ app.post('/startStreams', (postRequest, postResponse) => {
       const upperCaseSubstring = authorizationObject.token_type.substring(0, 1).toUpperCase();
       const tokenSubstring = authorizationObject.token_type.substring(1, authorizationObject.token_type.length);
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
-      const headers = { authorization, "Client-Id": process.env.ClientID, }; //Railway
+      const headers = { authorization, "Client-Id": process.env.ClientID, };
 
-      if (postRequest.body.searchQuery !== "") getCategories(postRequest.body.searchQuery, headers, postRequest, postResponse, streamArray);
+      if (feederObject.request.body.searchQuery !== "") {
+        getCategories(feederObject, headers);
+      }
       else {
-        getStreams(headers, streamArray, "", postRequest.body.maxViewers);
-        responseTimout(postResponse, "success", streamArray);
+        getStreams(feederObject, headers);
+        responseTimout(feederObject, "success");
       }
     });
 });
 
-function getCategories(searchQuery, headers, postRequest, postResponse, streamArray) {
-  categories = [];
-  let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${searchQuery}`;
+function getCategories(feederObject, headers) {
+  feederObject.categories = [];
+  let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${feederObject.request.searchQuery}`;
   fetch(categoryEndpoint, { headers })
     .then(res => res.json())
-    .then(DataObject => {
-      for (let Node of DataObject.data) {
-        categories.push(Node.name);
+    .then(dataObject => {
+      for (let category of dataObject.data) {
+        feederObject.categories.push(category.name);
       }
       if (categories.length !== 0) {
-        getStreams(headers, streamArray, "", postRequest.body.maxViewers);
-        responseTimout(postResponse, "success", streamArray);
+        getStreams(feederObject, headers);
+        responseTimout(feederObject, "success");
       }
       else {
-        stopLoading = true;
-        responseTime = 1000;
-        responseTimout(postResponse, "failure", []);
+        feederObject.stopLoading = true;
+        feederObject.responseTime = 1000;
+        responseTimout(feederObject, "failure");
       }
     });
 }
 
-function getStreams(headers, streamArray, pageNo, maxViewers) {
-  //delete
-  debugCounter++;
-  console.log(`getStreams called ${debugCounter} times...`);
-  //end
-  if (pageNo !== undefined && !stopLoading) {
+function getStreams(feederObject, headers) {
+  if (feederObject.pageNo !== undefined && !feederObject.stopLoading) {
     let streamsEndpoint = "";
-    if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
-    else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${pageNo}`;
+    if (feederObject.pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
+    else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${feederObject.pageNo}`;
     fetch(streamsEndpoint, { headers })
       .then(res => res.json())
       .then(dataObject => {
         for (let user of dataObject.data) {
-          if (categories.length !== 0) {
-            if (user.viewer_count <= maxViewers && categories.includes(user.game_name)) {
-              streamArray.push(user);
+          if (feederObject.categories.length !== 0) {
+            if (user.viewer_count <= feederObject.maxViewers && feederObject.categories.includes(user.game_name)) {
+              feederObject.streamArray.push(user);
             }
           }
-          else if (user.viewer_count <= maxViewers) {
-            streamArray.push(user);
+          else if (user.viewer_count <= feederObject.maxViewers) {
+            feederObject.streamArray.push(user);
           }
         }
-        getStreams(headers, streamArray, dataObject.pagination.cursor, maxViewers);
+        feederObject.pageNo = dataObject.pagination.cursor;
+        getStreams(feederObject, headers);
       });
   }
 }
 
-function responseTimout(postResponse, status, streamArray) {
+function responseTimout(feederObject, status) {
   setTimeout(() => {
-    stopLoading = true;
-    if (status === "success") console.log(`Loading Finalized. Total Streams: ${streamArray.length}`);
+    feederObject.stopLoading = true;
+    if (status === "success") console.log(`Loading Finalized. Total Streams: ${feederObject.streamArray.length}`);
     else if (status === "failure") console.log(`Load ended in failure, sent alert to client...`);
-    postResponse.json({
+    feederObject.response.json({
       status: status,
-      streams: streamArray
+      streams: feederObject.streamArray
     });
-  }, responseTime);
+  }, feederObject.responseTime);
 }
