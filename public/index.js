@@ -1,8 +1,29 @@
-function testCommand() {
-  const data = {
-    name: "BearTheCoder",
-  };
+// *****     Global Variables     *****
+const loadStreamsButton = document.getElementById('loadStreamsButton');
+const nextStreamButton = document.getElementById('nextStreamButton');
+const resetStreamsButton = document.getElementById('resetStreamsButton');
+const startCardButton = document.getElementById('startCardButton');
+const randomizeCardButton = document.getElementById('randomizeCardButton');
+const resetCardButton = document.getElementById('resetCardButton');
+const defaultScreen = document.getElementById('twitch-embed').innerHTML;
+let streamArray = [];
 
+// *****     Default Button Accessibility     *****
+nextStreamButton.disabled = true;
+resetStreamsButton.disabled = true;
+resetCardButton.disabled = true;
+
+function loadStreams() {
+  const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : document.getElementById('MaxViewCount').value;
+  const searchQuery = document.getElementById("CategoryInput").value;
+  const data = {
+    maxViewers: maxViewers,
+    searchQuery: searchQuery,
+    // // Delete Later ****************************
+    // ClientID: ClientID,
+    // ClientSecret: ClientSecret,
+    // // End *************************************
+  };
   const options = {
     method: 'POST',
     headers: {
@@ -10,6 +31,94 @@ function testCommand() {
     },
     body: JSON.stringify(data),
   };
+  fetch('/startStreams', options) //post
+    .then(promise => promise.json()
+      .then(jsonResponse => {
+        document.getElementById("LoadedUser").innerHTML =
+          `${jsonResponse.streams[0].user_name} is streaming ${jsonResponse.streams[0].game_name} to ${jsonResponse.streams[0].viewer_count} viewers.`;
+        document.getElementById("twitch-embed").innerHTML = '';
+        new Twitch.Player(document.getElementById("twitch-embed"), { channel: jsonResponse.streams[0].user_login });
+        document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
+        streamArray = jsonResponse.streams;
+        nextStreamButton.disabled = false;
+      }));
+  resetStreamsButton.disabled = false;
+  let timeToLoad = 90;
+  const timer = document.getElementById("twitch-embed");
+  timer.innerHTML = `<br>
+        <img src="loading-gif.gif" width="100" /> <h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
+  let tempTimer = document.getElementById('tempTimer');
+  setInterval(() => {
+    tempTimer.innerHTML = `<h4 id="tempTimer">Loading Streams ${timeToLoad--} seconds left...</h4>`;
+  }, 1000);
 
-  fetch('/api', options).then(() => console.log("data sent.."));
+
+};
+
+// *****     Stream Button Functions     *****
+function loadNextStream() {
+  let RandNum = Math.floor(Math.random() * streamArray.length);
+  document.getElementById("LoadedUser").innerHTML =
+    `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
+    to ${streamArray[RandNum].viewer_count} viewers.`;
+  document.getElementById("twitch-embed").innerHTML = '';
+  new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
+}
+
+function resetStreams() {
+  document.getElementById("twitch-embed").innerHTML = defaultScreen;
+  document.getElementById("LoadedUser").innerHTML = 'Load streams to get stream information.';
+  document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
+}
+
+// *****     Bingo Card Button Functions     *****
+function generateRandomBingoCard() {
+  let bingoSquares = document.querySelectorAll("textarea");
+  let duplicateArray = [];
+  BingoCardDefaultOptions.forEach((option) => {
+    duplicateArray.push(option);
+  });
+  bingoSquares.forEach((node) => {
+    let randomNumber = Math.floor(Math.random() * duplicateArray.length);
+    node.value = duplicateArray[randomNumber];
+    duplicateArray.splice(randomNumber, 1);
+  });
+}
+
+function startBingoCard() {
+  const bingoSquares = document.querySelectorAll("textarea");
+  const canStart = true;
+  for (let node of bingoSquares) {
+    if (node.value === "") {
+      canStart = false;
+      break;
+    }
+  }
+  if (canStart) {
+    for (let node of bingoSquares) {
+      node.outerHTML = `<p>${node.value}</p>`;
+    }
+    const pArray = document.querySelectorAll("p");
+    pArray.forEach((node) => {
+      node.addEventListener("click", () => {
+        node.classList.add('active');
+      });
+    });
+    resetCardButton.disabled = false;
+    randomizeCardButton.disabled = true;
+    startCardButton.disabled = true;
+  }
+  else {
+    alert("Please fill all bingo squares to play!");
+  }
+}
+
+function resetBingoCard() {
+  const pArray = document.querySelectorAll("p");
+  for (let node of pArray) {
+    node.outerHTML = '<textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>';
+  }
+  resetCardButton.disabled = true;
+  randomizeCardButton.disabled = false;
+  startCardButton.disabled = false;
 }
