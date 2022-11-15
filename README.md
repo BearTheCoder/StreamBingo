@@ -12,7 +12,8 @@
 
 # About
 
-https://streambingo.live
+http://streambingo.live (Waiting for CNAME from DNS and SSL Certificate)
+https://streambingo.up.railway.app (Temp link)
 
 Hi, Hello.
 Stream Bingo was an idea I had after coming across a website called https://nobody.live that displayed all of the current Twitch streamers that currently have no viewers.
