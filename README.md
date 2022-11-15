@@ -75,6 +75,6 @@ Ok, bye.
 
 -   [BearTheCoder](https://www.youtube.com/channel/UCWg8LAQk6NLQfj4Wr3zImKA)
 
-#### Support the Project
+#### Help Pay for Servers
 
--   [Buy me a Coffee](https://www.buymeacoffee.com/bearthecoder)
+-   [Buy me a Coffee](https://www.buymeacoffee.com/bearthecoder) I don't need the money, but if you want to help and don't know how to code then helping pay for the servers is the next best thing. <3
