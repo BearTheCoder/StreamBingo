@@ -9,10 +9,12 @@
 - [Issues and Excuses](#issues-and-excuses)
 - [License](#license)
 - [Authors](#authors)
+- [Support the Project](#support-the-project)
 
 # About
 
-https://streambingo.live
+http://streambingo.live (Waiting for CNAME from DNS and SSL Certificate) <br>
+https://streambingo.up.railway.app (Temp link)
 
 Hi, Hello.
 Stream Bingo was an idea I had after coming across a website called https://nobody.live that displayed all of the current Twitch streamers that currently have no viewers.
@@ -25,7 +27,7 @@ Now, the project is live for anyone to use.
 The project is hosted on https://railway.app with future plans to be migrated to docker. (If i can take the time out to learn docker)
 
 If you have any question or want to be involved, reach out to me on Discord.
-https://discord.gg/DuMJjretE2
+[My Discord](https://discord.gg/DuMJjretE2)
 
 Ok, bye.
 
@@ -71,4 +73,8 @@ Ok, bye.
 
 ### Authors
 
--   [@BearTheCoder](https://www.github.com/BearTheCoder)
+-   [BearTheCoder](https://www.youtube.com/channel/UCWg8LAQk6NLQfj4Wr3zImKA)
+
+#### Support the Project
+
+-   [Buy me a Coffee](https://www.buymeacoffee.com/bearthecoder)
