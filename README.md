@@ -33,7 +33,7 @@ Ok, bye.
 
 # Issues and Excuses
 
--   Issue # 1 - Loading screen
+-   Issue # 1 - Loading screen <br>
       There is a reason why the loading screen is there, it's loading. But why? Cost effectiveness? Maybe.
       The Twitch API allows you to make 800 calls to the API per minute. And it is free. So, there is no cost there.
       Railway.app on the other hand, charges me per usage.
