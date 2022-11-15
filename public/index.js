@@ -4,11 +4,12 @@ const startCardButton = document.getElementById('startCardButton');
 const randomizeCardButton = document.getElementById('randomizeCardButton');
 const resetCardButton = document.getElementById('resetCardButton');
 const defaultScreen = document.getElementById('twitch-embed').innerHTML;
-let streamArray = [];
 
 nextStreamButton.disabled = true;
 resetStreamsButton.disabled = true;
 resetCardButton.disabled = true;
+
+let streamArray = [];
 
 function loadStreams() {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
