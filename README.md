@@ -61,7 +61,7 @@ Ok, bye.
 ## Upcoming Features
 
 -   Chat integration.
--   Donation link to support server costs.
+-   Donation link for rich people.
 -   Mobile support.
 -   Overall better HTML and CSS work.
 -   About page/overlay.
