@@ -66,6 +66,7 @@ Ok, bye.
 -   Overall better HTML and CSS work.
 -   About page/overlay.
 -   General Optimizations.
+-   Customizable Colors.
 
 ### License
 
