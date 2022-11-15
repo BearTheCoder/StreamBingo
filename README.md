@@ -77,4 +77,4 @@ Ok, bye.
 
 #### Help Pay for Servers
 
--   [Buy me a Coffee](https://www.buymeacoffee.com/bearthecoder) I don't need the money, but if you want to help and don't know how to code then helping pay for the servers is the next best thing. <3
+-   [Rich People Click Here](https://www.buymeacoffee.com/bearthecoder)
