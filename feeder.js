@@ -46,6 +46,7 @@ function getStreams(headers, pageNo) {
         for (let user of dataObject.data) {
           newStreamArray.push(user);
         }
+        console.log(pageNo);
         getStreams(headers, dataObject.pagination.cursor);
       });
   }
