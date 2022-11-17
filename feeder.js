@@ -2,7 +2,7 @@ require('dotenv').config; //process.env.VARIABLE used for Railway deployment
 
 const express = require("express");
 const app = express();
-app.listen(process.env.PORT, () => console.log("listening..."));
+app.listen(process.env.PORT, () => console.log("Listening..."));
 app.use(express.static('public'));
 app.use(express.json());
 
@@ -52,7 +52,7 @@ function getStreams(headers, pageNo) {
     streamArray = Array.from(newStreamArray);
     newStreamArray = [];
     const timeoutReason = pageNo === undefined ? 'pageNo undefined' : 'timeout';
-    console.log(`Loading stoped. Reason: ${timeoutReason}`);
+    console.log(`Loading stopped. Reason: ${timeoutReason}`);
   }
 }
 
@@ -71,7 +71,7 @@ function getCategories(searchQuery, headers) {
 
 app.post('/streams', (request, response) => {
   if (request.searchQuery !== "") {
-    getAuthHeader(searchQuery);
+    getAuthHeader(request.searchQuery);
   }
   response.json({
     streams: streamArray,
