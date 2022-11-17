@@ -48,8 +48,8 @@ function getStreams (headers, pageNo) {
   else {
 
     streamArray = Array.from(newStreamArray);
-    console.log(`newStreamArray: ${ newStreamArray }`);
-    console.log(`streamArray: ${ streamArray }`);
+    console.log(`newStreamArray: ${ newStreamArray.length }`);
+    console.log(`streamArray: ${ streamArray.length }`);
     newStreamArray = [];
   }
 }
