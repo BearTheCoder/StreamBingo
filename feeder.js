@@ -46,7 +46,6 @@ function getStreams(headers, pageNo) {
         for (let user of dataObject.data) {
           newStreamArray.push(user);
         }
-        console.log(pageNo);
         getStreams(headers, dataObject.pagination.cursor);
       });
   }
@@ -75,9 +74,9 @@ function getCategories(searchQuery, headers) {
 
 app.post('/streams', (request, response) => {
   if (request.searchQuery !== "") {
-    currentResponse = response;
     getAuthHeader(request.searchQuery);
   }
+  currentResponse = response;
 });
 
 function httpResponse() {
