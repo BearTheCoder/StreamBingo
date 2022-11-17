@@ -22,7 +22,7 @@ function loadStreams () {
   fetch('/streams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
-
+      console.log(jsonResponse.streams);
       filterStreams(jsonResponse.streams);
     });
 };

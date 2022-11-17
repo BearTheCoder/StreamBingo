@@ -25,6 +25,7 @@ function getAuthHeader () {
     });
   setTimeout(() => {
     stopLoading = true;
+    console.log(`Streams: ${ streamArray.length }`);
     console.log('Loading finished...');
   }, 90000);
 }
