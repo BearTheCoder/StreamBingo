@@ -25,11 +25,16 @@ function loadStreams () {
   let timer = 1;
   const counter = document.getElementById("twitch-embed");
   counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="timer">Loading Streams. I took 0 seconds from you.</h4>`;
-  if (document.getElementById('timer') !== null) {
-    setInterval(() => {
+
+  const recursiveScript = setInterval(() => {
+    if (document.getElementById('timer') !== null) {
       document.getElementById('timer').innerText = `Loading Streams. I took ${ timer++ } seconds from you.`;
-    }, 1000);
-  }
+    }
+    else {
+      clearInterval(recursiveScript);
+    }
+  }, 1000);
+
   fetch('/streams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
