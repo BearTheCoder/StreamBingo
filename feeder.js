@@ -14,7 +14,7 @@ let categories = [];
 getAuthHeader("");
 setInterval(getAuthHeader, 500000); //Move Get Auth here 30-min timeout?
 
-function getAuthHeader(searchQuery) {
+function getAuthHeader(searchQuery, response) {
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
     .then(res => res.json())
@@ -23,8 +23,8 @@ function getAuthHeader(searchQuery) {
       const tokenSubstring = authorizationObject.token_type.substring(1, authorizationObject.token_type.length);
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, };
-      if (searchQuery === "") getStreams(headers, "");
-      else getCategories(searchQuery, headers);
+      if (searchQuery === "") getStreams(headers, "", response);
+      else getCategories(searchQuery, headers, response);
     });
   if (searchQuery === "") {
     console.log("Timeout countdown started...");
@@ -34,7 +34,7 @@ function getAuthHeader(searchQuery) {
   }
 }
 
-function getStreams(headers, pageNo) {
+function getStreams(headers, pageNo, response) {
   if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
@@ -45,7 +45,7 @@ function getStreams(headers, pageNo) {
         for (let user of dataObject.data) {
           newStreamArray.push(user);
         }
-        getStreams(headers, dataObject.pagination.cursor);
+        getStreams(headers, dataObject.pagination.cursor, response);
       });
   }
   else {
@@ -53,10 +53,11 @@ function getStreams(headers, pageNo) {
     newStreamArray = [];
     const timeoutReason = pageNo === undefined ? 'pageNo undefined' : 'timeout';
     console.log(`Loading stopped. Reason: ${timeoutReason}`);
+    httpResponse(response);
   }
 }
 
-function getCategories(searchQuery, headers) {
+function getCategories(searchQuery, headers, response) {
   console.log("Searching for categories...");
   categories = [];
   let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${searchQuery}`;
@@ -67,14 +68,18 @@ function getCategories(searchQuery, headers) {
         categories.push(category.name);
       }
     });
+  httpResponse(response);
 }
 
 app.post('/streams', (request, response) => {
   if (request.searchQuery !== "") {
-    getAuthHeader(request.searchQuery);
+    getAuthHeader(request.searchQuery, response);
   }
+});
+
+function httpResponse(response) {
   response.json({
     streams: streamArray,
     categories: categories,
   });
-});
+}
