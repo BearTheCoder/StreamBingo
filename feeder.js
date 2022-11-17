@@ -32,7 +32,7 @@ function getAuthHeader () {
 
 function getStreams (headers, pageNo) {
   newStreamArray = [];
-  if (pageNo !== undefined || stopLoading === false) {
+  if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
     else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${ pageNo }`;
