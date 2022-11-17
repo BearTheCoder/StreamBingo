@@ -46,7 +46,10 @@ function getStreams (headers, pageNo) {
       });
   }
   else {
+
     streamArray = Array.from(newStreamArray);
+    console.log(`newStreamArray: ${ newStreamArray }`);
+    console.log(`streamArray: ${ streamArray }`);
     newStreamArray = [];
   }
 }
