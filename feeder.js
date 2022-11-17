@@ -8,6 +8,7 @@ app.use(express.json());
 
 let stopLoading = false;
 let streamArray = [];
+let newStreamArray = [];
 
 getAuthHeader();
 setInterval(getAuthHeader, 1800000); //Move Get Auth here 30-min timeout?
@@ -31,7 +32,7 @@ function getAuthHeader () {
 }
 
 function getStreams (headers, pageNo) {
-  newStreamArray = [];
+
   if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
