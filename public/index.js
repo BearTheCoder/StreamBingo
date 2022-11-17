@@ -12,23 +12,10 @@ resetCardButton.disabled = true;
 let streamArray = [];
 
 function loadStreams() {
-
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
-  let timer = 1;
-  const counter = document.getElementById("twitch-embed");
-  counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="timer">Loading Streams. I took 0 seconds from you.</h4>`;
-
-  const recursiveScript = setInterval(() => {
-    if (document.getElementById('timer') !== null) {
-      document.getElementById('timer').innerText = `Loading Streams. I took ${timer++} seconds from you.`;
-    }
-    else {
-      clearInterval(recursiveScript);
-    }
-  }, 1000);
-
+  switchHTMLToLoading();
 
   streamArray = [];
   const options = {
@@ -62,19 +49,33 @@ async function filterStreams(jsonResponse, maxViewers, searchQuery) {
     alert("Search query returned no results. Try a different search query.");
     resetStreamHTML();
   }
-  else { loadFirstStream(streams); }
+  else { loadFirstStream(); }
 }
 
-function loadFirstStream(streams) {
+function switchHTMLToLoading() {
+  let timer = 1;
+  const counter = document.getElementById("twitch-embed");
+  counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="timer">Loading Streams. I took 0 seconds from you.</h4>`;
+  const recursiveScript = setInterval(() => {
+    if (document.getElementById('timer') !== null) {
+      document.getElementById('timer').innerText = `Loading Streams. I took ${timer++} seconds from you.`;
+    }
+    else {
+      clearInterval(recursiveScript);
+    }
+  }, 1000);
+}
+
+function loadFirstStream() {
   let RandNum = Math.floor(Math.random() * streamArray.length);
-  const gameName = streams[RandNum].game_name;
-  const viewerCount = streams[RandNum].viewer_count;
-  const userName = streams[RandNum].user_name;
+  const gameName = streamArray[RandNum].game_name;
+  const viewerCount = streamArray[RandNum].viewer_count;
+  const userName = streamArray[RandNum].user_name;
   const loadedInfoNode = document.getElementById("LoadedUser");
   loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streams.length}`;
+  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
