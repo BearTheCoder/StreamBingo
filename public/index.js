@@ -25,6 +25,13 @@ function loadStreams () {
       console.log(jsonResponse.streams);
       filterStreams(jsonResponse.streams);
     });
+  let timeToLoad = 0;
+  const timer = document.getElementById("twitch-embed");
+  timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
+  let tempTimer = document.getElementById('tempTimer');
+  setInterval(() => {
+    tempTimer.innerText = `Loading Streams ${ timeToLoad++ } seconds left...`;
+  }, 1000);
 };
 
 function filterStreams (streams) {
@@ -33,7 +40,7 @@ function filterStreams (streams) {
   maxViewers >= 1 ? maxViewers : 1;
 
   for (let user of streams) {
-    if (user.viewer_count <= feederObject.request.body.maxViewers) {
+    if (user.viewer_count <= maxViewers) {
       if (searchQuery === "") {
         streamArray.push(user);
       }
