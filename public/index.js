@@ -22,18 +22,19 @@ function loadStreams () {
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
-  let timer = 0;
+  let timer = 1;
   const counter = document.getElementById("twitch-embed");
-  counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="timer">Loading Streams 0...</h4>`;
-  setInterval(() => {
-    document.getElementById('timer').innerText = `Streams loaded: ${ timer++ }`;
-  }, 1000);
+  counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="timer">Loading Streams. I took 0 seconds from you.</h4>`;
+  if (document.getElementById('timer') !== null) {
+    setInterval(() => {
+      document.getElementById('timer').innerText = `Loading Streams. I took ${ timer++ } seconds from you.`;
+    }, 1000);
+  }
   fetch('/streams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
       filterStreams(jsonResponse.streams, maxViewers, searchQuery);
     });
-
 };
 
 async function filterStreams (streams, maxViewers, searchQuery) {
