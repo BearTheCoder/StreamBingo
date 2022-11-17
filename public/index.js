@@ -31,14 +31,6 @@ function filterStreams (streams) {
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
 
-  let timeToLoad = 1;
-  const timer = document.getElementById("twitch-embed");
-  timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer">Loading Streams 0...</h4>`;
-  let tempTimer = document.getElementById('tempTimer');
-  setInterval(() => {
-    tempTimer.innerText = `Loading Streams ${ timeToLoad++ } seconds left...`;
-  }, 1000);
-
   for (let user of streams) {
     if (user.viewer_count <= maxViewers) {
       if (searchQuery === "") {
@@ -48,6 +40,10 @@ function filterStreams (streams) {
         streamArray.push(user);
       }
     }
+    let streamsLoaded = 0;
+    const counter = document.getElementById("twitch-embed");
+    counter.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="counter">Loading Streams 0...</h4>`;
+    document.getElementById('counter').innerText = `Streams loaded: ${ streamsLoaded++ }`;
   }
 
   if (streamArray.length === 0) {
