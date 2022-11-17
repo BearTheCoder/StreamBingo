@@ -47,7 +47,7 @@ function getStreams (headers, pageNo) {
   }
   else {
 
-    streamArray = Array.from(newStreamArray);
+    //streamArray = Array.from(newStreamArray);
     console.log(`newStreamArray: ${ newStreamArray.length }`);
     console.log(`streamArray: ${ streamArray.length }`);
     newStreamArray = [];
