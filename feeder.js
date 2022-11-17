@@ -26,7 +26,6 @@ function getAuthHeader () {
     });
   setTimeout(() => {
     stopLoading = true;
-    console.log('Loading finished...');
   }, 90000);
 }
 
@@ -47,6 +46,8 @@ function getStreams (headers, pageNo) {
   else {
     streamArray = Array.from(newStreamArray);
     newStreamArray = [];
+    const timeoutReason = pageNo === undefined ? 'pageNo undefined' : "timeout";
+    console.log(`Loading stoped. Reason: ${ timeoutReason }`);
   }
 }
 

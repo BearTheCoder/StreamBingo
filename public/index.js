@@ -54,19 +54,19 @@ function filterStreams (streams) {
     alert("Search query returned no results. Try a different search query.");
     resetStreamHTML();
   }
-  else { loadFirstStream(); }
+  else { loadFirstStream(streams); }
 }
 
-function loadFirstStream () {
+function loadFirstStream (streams) {
   let RandNum = Math.floor(Math.random() * streamArray.length);
-  const gameName = jsonResponse.streams[ RandNum ].game_name;
-  const viewerCount = jsonResponse.streams[ RandNum ].viewer_count;
-  const userName = jsonResponse.streams[ RandNum ].user_name;
+  const gameName = streams[ RandNum ].game_name;
+  const viewerCount = streams[ RandNum ].viewer_count;
+  const userName = streams[ RandNum ].user_name;
   const loadedInfoNode = document.getElementById("LoadedUser");
   loadedInfoNode.innerHTML = `${ userName } is streaming ${ gameName } to ${ viewerCount } viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${ jsonResponse.streams.length }`;
+  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${ streams.length }`;
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
