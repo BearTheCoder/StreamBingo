@@ -73,10 +73,10 @@ function getCategories(searchQuery, headers) {
 }
 
 app.post('/streams', (request, response) => {
+  currentResponse = response;
   if (request.searchQuery !== "") {
     getAuthHeader(request.searchQuery);
   }
-  currentResponse = response;
 });
 
 function httpResponse() {
