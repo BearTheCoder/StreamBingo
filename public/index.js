@@ -11,14 +11,8 @@ resetCardButton.disabled = true;
 
 let streamArray = [];
 
-function loadStreams () {
-  streamArray = [];
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  };
+function loadStreams() {
+
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
@@ -28,27 +22,37 @@ function loadStreams () {
 
   const recursiveScript = setInterval(() => {
     if (document.getElementById('timer') !== null) {
-      document.getElementById('timer').innerText = `Loading Streams. I took ${ timer++ } seconds from you.`;
+      document.getElementById('timer').innerText = `Loading Streams. I took ${timer++} seconds from you.`;
     }
     else {
       clearInterval(recursiveScript);
     }
   }, 1000);
 
+
+  streamArray = [];
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    searchQuery: searchQuery,
+  };
+
   fetch('/streams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
-      filterStreams(jsonResponse.streams, maxViewers, searchQuery);
+      filterStreams(jsonResponse, maxViewers, searchQuery);
     });
 };
 
-async function filterStreams (streams, maxViewers, searchQuery) {
-  for (let user of streams) {
+async function filterStreams(jsonResponse, maxViewers, searchQuery) {
+  for (let user of jsonResponse.streams) {
     if (user.viewer_count <= maxViewers) {
       if (searchQuery === "") {
         streamArray.push(user);
       }
-      else if (user.game_name.includes(searchQuery)) {
+      else if (jsonResponse.categories.includes(user.game_name)) {
         streamArray.push(user);
       }
     }
@@ -61,36 +65,36 @@ async function filterStreams (streams, maxViewers, searchQuery) {
   else { loadFirstStream(streams); }
 }
 
-function loadFirstStream (streams) {
+function loadFirstStream(streams) {
   let RandNum = Math.floor(Math.random() * streamArray.length);
-  const gameName = streams[ RandNum ].game_name;
-  const viewerCount = streams[ RandNum ].viewer_count;
-  const userName = streams[ RandNum ].user_name;
+  const gameName = streams[RandNum].game_name;
+  const viewerCount = streams[RandNum].viewer_count;
+  const userName = streams[RandNum].user_name;
   const loadedInfoNode = document.getElementById("LoadedUser");
-  loadedInfoNode.innerHTML = `${ userName } is streaming ${ gameName } to ${ viewerCount } viewers.`;
+  loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${ streams.length }`;
+  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streams.length}`;
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
 
-function loadNextStream () {
+function loadNextStream() {
   let RandNum = Math.floor(Math.random() * streamArray.length);
   document.getElementById("LoadedUser").innerHTML =
-    `${ streamArray[ RandNum ].user_name } is streaming ${ streamArray[ RandNum ].game_name } 
-    to ${ streamArray[ RandNum ].viewer_count } viewers.`;
+    `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
+    to ${streamArray[RandNum].viewer_count} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
-  new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[ RandNum ].user_login });
+  new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
 }
 
-function resetStreamHTML () {
+function resetStreamHTML() {
   document.getElementById("twitch-embed").innerHTML = defaultScreen;
   document.getElementById("LoadedUser").innerHTML = 'Load streams to get stream information.';
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
 }
 
-function generateRandomBingoCard () {
+function generateRandomBingoCard() {
   let bingoSquares = document.querySelectorAll("textarea");
   let duplicateArray = [];
   BingoCardDefaultOptions.forEach((option) => {
@@ -98,12 +102,12 @@ function generateRandomBingoCard () {
   });
   bingoSquares.forEach((node) => {
     let randomNumber = Math.floor(Math.random() * duplicateArray.length);
-    node.value = duplicateArray[ randomNumber ];
+    node.value = duplicateArray[randomNumber];
     duplicateArray.splice(randomNumber, 1);
   });
 }
 
-function startBingoCard () {
+function startBingoCard() {
   const bingoSquares = document.querySelectorAll("textarea");
   const canStart = true;
   for (let node of bingoSquares) {
@@ -114,7 +118,7 @@ function startBingoCard () {
   }
   if (canStart) {
     for (let node of bingoSquares) {
-      node.outerHTML = `<p>${ node.value }</p>`;
+      node.outerHTML = `<p>${node.value}</p>`;
     }
     const pArray = document.querySelectorAll("p");
     pArray.forEach((node) => {
@@ -131,7 +135,7 @@ function startBingoCard () {
   }
 }
 
-function resetBingoCard () {
+function resetBingoCard() {
   const pArray = document.querySelectorAll("p");
   for (let node of pArray) {
     node.outerHTML = '<textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>';
