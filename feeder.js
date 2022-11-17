@@ -39,7 +39,9 @@ function getStreams (headers, pageNo) {
     fetch(streamsEndpoint, { headers })
       .then(res => res.json())
       .then(dataObject => {
+        console.log(pageNo);
         for (let user of dataObject.data) {
+
           newStreamArray.push(user);
         }
         getStreams(headers, dataObject.pagination.cursor);
