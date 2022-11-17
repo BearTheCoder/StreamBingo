@@ -26,13 +26,11 @@ function getAuthHeader () {
     });
   setTimeout(() => {
     stopLoading = true;
-    console.log(`Streams: ${ streamArray.length }`);
     console.log('Loading finished...');
   }, 90000);
 }
 
 function getStreams (headers, pageNo) {
-
   if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
@@ -40,19 +38,14 @@ function getStreams (headers, pageNo) {
     fetch(streamsEndpoint, { headers })
       .then(res => res.json())
       .then(dataObject => {
-        console.log(pageNo);
         for (let user of dataObject.data) {
-
           newStreamArray.push(user);
         }
         getStreams(headers, dataObject.pagination.cursor);
       });
   }
   else {
-
     streamArray = Array.from(newStreamArray);
-    console.log(`newStreamArray: ${ newStreamArray.length }`);
-    console.log(`streamArray: ${ streamArray.length }`);
     newStreamArray = [];
   }
 }
@@ -62,25 +55,3 @@ app.post('/streams', (request, response) => {
     streams: streamArray,
   });
 });
-
-// function getCategories (feederObject, headers) {
-//   feederObject.categories = [];
-//   let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${ feederObject.request.body.searchQuery }`;
-//   fetch(categoryEndpoint, { headers })
-//     .then(res => res.json())
-//     .then(dataObject => {
-//       for (let category of dataObject.data) {
-//         feederObject.categories.push(category.name);
-//       }
-//       if (feederObject.categories.length !== 0) {
-//         getStreams(feederObject, headers);
-//         loadTimeout(feederObject, "success");
-//       }
-//       else {
-//         feederObject.stopLoading = true;
-//         feederObject.responseTime = 1000;
-//         loadTimeout(feederObject, "failure");
-//       }
-//     });
-// }
-

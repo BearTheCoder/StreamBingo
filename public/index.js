@@ -22,14 +22,12 @@ function loadStreams () {
   fetch('/streams', options) //post
     .then(promise => promise.json())
     .then(jsonResponse => {
-      console.log(jsonResponse.streams);
       filterStreams(jsonResponse.streams);
     });
-
 };
 
 function filterStreams (streams) {
-  const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
+  let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
 
