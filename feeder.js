@@ -11,8 +11,8 @@ let streamArray = [];
 let newStreamArray = [];
 let categories = [];
 
-getAuthHeader(null);
-setInterval(getAuthHeader(null), 500000); //Move Get Auth here 30-min timeout?
+getAuthHeader("");
+setInterval(getAuthHeader(""), 500000); //Move Get Auth here 30-min timeout?
 
 function getAuthHeader(searchQuery) {
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
@@ -23,10 +23,10 @@ function getAuthHeader(searchQuery) {
       const tokenSubstring = authorizationObject.token_type.substring(1, authorizationObject.token_type.length);
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, };
-      if (searchQuery === null) getStreams(headers, null);
+      if (searchQuery === "") getStreams(headers, "");
       else getCategories(searchQuery, headers);
     });
-  if (searchQuery === null) {
+  if (searchQuery === "") {
     console.log("Timeout countdown started...");
     setTimeout(() => {
       stopLoading = true;
@@ -37,7 +37,7 @@ function getAuthHeader(searchQuery) {
 function getStreams(headers, pageNo) {
   if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
-    if (pageNo === null) streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
+    if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
     else streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100&after=${pageNo}`;
     fetch(streamsEndpoint, { headers })
       .then(res => res.json())
