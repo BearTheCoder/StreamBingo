@@ -10,11 +10,12 @@ let stopLoading = false;
 let streamArray = [];
 let newStreamArray = [];
 let categories = [];
+let currentResponse = null;
 
 getAuthHeader("");
 setInterval(getAuthHeader, 500000); //Move Get Auth here 30-min timeout?
 
-function getAuthHeader(searchQuery, response) {
+function getAuthHeader(searchQuery) {
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
   fetch(url, { method: "POST" })
     .then(res => res.json())
@@ -23,8 +24,8 @@ function getAuthHeader(searchQuery, response) {
       const tokenSubstring = authorizationObject.token_type.substring(1, authorizationObject.token_type.length);
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, };
-      if (searchQuery === "") getStreams(headers, "", response);
-      else getCategories(searchQuery, headers, response);
+      if (searchQuery === "") getStreams(headers, "");
+      else getCategories(searchQuery, headers);
     });
   if (searchQuery === "") {
     console.log("Timeout countdown started...");
@@ -34,7 +35,7 @@ function getAuthHeader(searchQuery, response) {
   }
 }
 
-function getStreams(headers, pageNo, response) {
+function getStreams(headers, pageNo) {
   if (pageNo !== undefined && stopLoading === false) {
     let streamsEndpoint = "";
     if (pageNo === "") streamsEndpoint = `https://api.twitch.tv/helix/streams?language=en&first=100`;
@@ -45,7 +46,7 @@ function getStreams(headers, pageNo, response) {
         for (let user of dataObject.data) {
           newStreamArray.push(user);
         }
-        getStreams(headers, dataObject.pagination.cursor, response);
+        getStreams(headers, dataObject.pagination.cursor);
       });
   }
   else {
@@ -53,11 +54,11 @@ function getStreams(headers, pageNo, response) {
     newStreamArray = [];
     const timeoutReason = pageNo === undefined ? 'pageNo undefined' : 'timeout';
     console.log(`Loading stopped. Reason: ${timeoutReason}`);
-    httpResponse(response);
+    httpResponse();
   }
 }
 
-function getCategories(searchQuery, headers, response) {
+function getCategories(searchQuery, headers) {
   console.log("Searching for categories...");
   categories = [];
   let categoryEndpoint = `https://api.twitch.tv/helix/search/categories?query=${searchQuery}`;
@@ -68,17 +69,18 @@ function getCategories(searchQuery, headers, response) {
         categories.push(category.name);
       }
     });
-  httpResponse(response);
+  httpResponse();
 }
 
 app.post('/streams', (request, response) => {
   if (request.searchQuery !== "") {
-    getAuthHeader(request.searchQuery, response);
+    currentResponse = response;
+    getAuthHeader(request.searchQuery);
   }
 });
 
-function httpResponse(response) {
-  response.json({
+function httpResponse() {
+  currentResponse.json({
     streams: streamArray,
     categories: categories,
   });
