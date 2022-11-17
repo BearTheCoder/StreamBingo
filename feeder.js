@@ -54,7 +54,6 @@ function getStreams(headers, pageNo) {
     newStreamArray = [];
     const timeoutReason = pageNo === undefined ? 'pageNo undefined' : 'timeout';
     console.log(`Loading stopped. Reason: ${timeoutReason}`);
-    httpResponse();
   }
 }
 
