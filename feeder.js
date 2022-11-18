@@ -29,7 +29,6 @@ function getAuthHeader(searchQuery) {
         rateLimit = 0;
         stopLoading = false;
         currentResponse = null;
-        streamArray = [];
         newStreamArray = [];
         categories = [];
         getStreams(headers, "");
@@ -62,6 +61,7 @@ function getStreams(headers, pageNo) {
       });
   }
   else {
+    streamArray = [];
     streamArray = Array.from(newStreamArray);
     newStreamArray = [];
     const timeoutReason = pageNo === undefined ? 'pageNo undefined' : 'timeout';

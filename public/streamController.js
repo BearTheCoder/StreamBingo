@@ -11,6 +11,7 @@ let streamArray = [];
 function loadStreams() {
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
+  console.log(`Search: ${searchQuery}`);
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
   switchHTMLToLoading();
   streamArray = [];
@@ -92,6 +93,8 @@ function resetStreamHTML() {
   document.getElementById("twitch-embed").innerHTML = defaultScreen;
   document.getElementById("LoadedUser").innerHTML = 'Load streams to get stream information.';
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
+  nextStreamButton.disabled = true;
+  resetStreamsButton.disabled = true;
 }
 
 
