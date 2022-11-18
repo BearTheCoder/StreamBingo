@@ -57,6 +57,15 @@ function getStreams(headers, pageNo) {
   }
 }
 
+
+
+app.post('/streams', (request, response) => {
+  currentResponse = response;
+  if (request.searchQuery !== "") {
+    getAuthHeader(request.searchQuery);
+  }
+});
+
 function getCategories(searchQuery, headers) {
   console.log("Searching for categories...");
   categories = [];
@@ -70,13 +79,6 @@ function getCategories(searchQuery, headers) {
     });
   httpResponse();
 }
-
-app.post('/streams', (request, response) => {
-  currentResponse = response;
-  if (request.searchQuery !== "") {
-    getAuthHeader(request.searchQuery);
-  }
-});
 
 function httpResponse() {
   currentResponse.json({
