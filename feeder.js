@@ -14,7 +14,7 @@ let currentResponse = null;
 let rateLimit = 0;
 
 getAuthHeader("");
-setInterval(getAuthHeader, 180000); //Move Get Auth here 30-min timeout?
+setInterval(() => getAuthHeader(""), 180000); //Move Get Auth here 30-min timeout?
 
 function getAuthHeader(searchQuery) {
   const url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.ClientID}&client_secret=${process.env.ClientSecret}&grant_type=client_credentials`;
