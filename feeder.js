@@ -67,10 +67,12 @@ function getStreams(headers, pageNo) {
 app.post('/streams', (request, response) => {
   currentResponse = response;
   if (request.searchQuery !== "") {
-    console.log(request.body.searchQuery);
     getAuthHeader(request.body.searchQuery);
   }
-  httpResponse();
+  else {
+    httpResponse();
+  }
+
 });
 
 function getCategories(searchQuery, headers) {
@@ -83,6 +85,7 @@ function getCategories(searchQuery, headers) {
       for (let category of dataObject.data) {
         categories.push(category.name);
       }
+      httpResponse();
     });
 }
 
