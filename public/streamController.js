@@ -7,6 +7,7 @@ nextStreamButton.disabled = true;
 resetStreamsButton.disabled = true;
 
 let streamArray = [];
+const twitchPlayer = null;
 
 function loadStreams() {
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
@@ -74,7 +75,7 @@ function loadFirstStream() {
   const loadedInfoNode = document.getElementById("LoadedUser");
   loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
-  new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+  twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
   document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
@@ -85,8 +86,7 @@ function loadNextStream() {
   document.getElementById("LoadedUser").innerHTML =
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
     to ${streamArray[RandNum].viewer_count} viewers.`;
-  document.getElementById("twitch-embed").innerHTML = '';
-  new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
+  twitchPlayer.channel = streamArray[RandNum].user_login;
 }
 
 function resetStreamHTML() {
