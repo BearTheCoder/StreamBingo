@@ -26,6 +26,12 @@ function getAuthHeader(searchQuery) {
       const authorization = `${upperCaseSubstring + tokenSubstring} ${authorizationObject.access_token}`;
       const headers = { authorization, "Client-Id": process.env.ClientID, };
       if (searchQuery === "") {
+        rateLimit = 0;
+        stopLoading = false;
+        currentResponse = null;
+        streamArray = [];
+        newStreamArray = [];
+        categories = [];
         getStreams(headers, "");
       }
       else {
