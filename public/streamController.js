@@ -7,12 +7,11 @@ nextStreamButton.disabled = true;
 resetStreamsButton.disabled = true;
 
 let streamArray = [];
-const twitchPlayer = null;
+let twitchPlayer = null;
 
 function loadStreams() {
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
-  console.log(`Search: ${searchQuery} ${typeof (searchQuery)}`);
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
   switchHTMLToLoading();
   streamArray = [];
