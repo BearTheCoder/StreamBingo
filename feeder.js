@@ -29,7 +29,6 @@ function getAuthHeader(searchQuery) {
         getStreams(headers, "");
       }
       else {
-        console.log(`Search Query: ${searchQuery}`);
         getCategories(searchQuery, headers);
       }
     });
@@ -64,11 +63,11 @@ function getStreams(headers, pageNo) {
   }
 }
 
-
-
+//HTTP REQUEST
 app.post('/streams', (request, response) => {
   currentResponse = response;
   if (request.searchQuery !== undefined) {
+    console.log(request.searchQuery);
     getAuthHeader(request.searchQuery);
   }
 });
