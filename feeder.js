@@ -70,6 +70,7 @@ app.post('/streams', (request, response) => {
     console.log(request.searchQuery);
     getAuthHeader(request.searchQuery);
   }
+  httpResponse();
 });
 
 function getCategories(searchQuery, headers) {
@@ -83,7 +84,6 @@ function getCategories(searchQuery, headers) {
         categories.push(category.name);
       }
     });
-  httpResponse();
 }
 
 function httpResponse() {
