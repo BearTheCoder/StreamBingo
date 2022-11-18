@@ -73,9 +73,9 @@ function loadFirstStream() {
   const userName = streamArray[RandNum].user_name;
   const loadedInfoNode = document.getElementById("LoadedUser");
   loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
+  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   document.getElementById("twitch-embed").innerHTML = '';
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-  document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
@@ -85,7 +85,7 @@ function loadNextStream() {
   document.getElementById("LoadedUser").innerHTML =
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
     to ${streamArray[RandNum].viewer_count} viewers.`;
-  twitchPlayer.channel = streamArray[RandNum].user_login;
+  twitchPlayer.setChannel(streamArray[RandNum].user_login);
 }
 
 function resetStreamHTML() {
