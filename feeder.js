@@ -66,10 +66,9 @@ function getStreams(headers, pageNo) {
 //HTTP REQUEST
 app.post('/streams', (request, response) => {
   currentResponse = response;
-  console.log(request.searchQuery);
-  if (request.searchQuery !== undefined) {
-    console.log(request.searchQuery);
-    getAuthHeader(request.searchQuery);
+  if (request.searchQuery !== "") {
+    console.log(request.body.searchQuery);
+    getAuthHeader(request.body.searchQuery);
   }
   httpResponse();
 });

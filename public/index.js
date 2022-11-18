@@ -12,19 +12,20 @@ resetCardButton.disabled = true;
 let streamArray = [];
 
 function loadStreams() {
-  console.log('Button clicked...'); //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   let maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   const searchQuery = document.getElementById("CategoryInput").value;
   maxViewers = maxViewers >= 1 ? maxViewers : 1;
   switchHTMLToLoading();
-  console.log('html switched...'); //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   streamArray = [];
+  data = {
+    searchQuery: searchQuery
+  };
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    searchQuery: searchQuery,
+    body: JSON.stringify(data),
   };
 
   fetch('/streams', options) //post
@@ -35,7 +36,6 @@ function loadStreams() {
 };
 
 async function filterStreams(jsonResponse, maxViewers, searchQuery) {
-  console.log('Filtering started...'); //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   for (let user of jsonResponse.streams) {
     if (user.viewer_count <= maxViewers) {
       if (searchQuery === "") {
