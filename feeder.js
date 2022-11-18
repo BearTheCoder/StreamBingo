@@ -100,4 +100,5 @@ function httpResponse() {
     streams: streamArray,
     categories: categories,
   });
+  currentResponse.end();
 }
