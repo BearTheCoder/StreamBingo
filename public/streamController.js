@@ -90,7 +90,7 @@ function loadNextStream() {
     to ${streamArray[RandNum].viewer_count} viewers.`;
   twitchPlayer.setChannel(streamArray[RandNum].user_login);
   if (twitchPlayer.getEnded()) {
-    loadNextStream;
+    loadNextStream();
   }
 }
 
