@@ -88,7 +88,7 @@ function loadNextStream() {
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
     to ${streamArray[RandNum].viewer_count} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
-  twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+  twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_name });
   console.log(`Stream Ended? ${twitchPlayer.getEnded()} ${typeof (twitchPlayer.getEnded())}`);
   if (twitchPlayer.getEnded()) {
     loadNextStream();
