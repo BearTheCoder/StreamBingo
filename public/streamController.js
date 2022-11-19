@@ -77,7 +77,7 @@ function loadFirstStream() {
   document.getElementById("twitch-embed").innerHTML = '';
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
   if (twitchPlayer.getEnded()) {
-    loadNextStream;
+    loadNextStream();
   }
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
