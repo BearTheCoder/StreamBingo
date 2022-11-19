@@ -75,10 +75,19 @@ function loadFirstStream() {
   document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   document.getElementById("twitch-embed").innerHTML = '';
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+
+
+
   console.log(twitchPlayer.getPlaybackStats().playbackRate);
+
+  twitchPlayer.addEventListener("Twitch.Player.PLAYING", () => console.log(twitchPlayer.getPlaybackStats().playbackRate));
+
   if (twitchPlayer.getEnded()) {
     loadNextStream();
   }
+
+
+
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
@@ -90,10 +99,18 @@ function loadNextStream() {
     to ${streamArray[RandNum].viewer_count} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_name });
+
+
   console.log(twitchPlayer.getPlaybackStats().playbackRate);
+
+  twitchPlayer.addEventListener("Twitch.Player.PLAYING", () => console.log(twitchPlayer.getPlaybackStats().playbackRate));
+
   if (twitchPlayer.getEnded()) {
     loadNextStream();
   }
+
+
+
 }
 
 function resetStreamHTML() {
@@ -102,4 +119,9 @@ function resetStreamHTML() {
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
   nextStreamButton.disabled = true;
   resetStreamsButton.disabled = true;
+}
+
+
+function testEvent() {
+
 }
