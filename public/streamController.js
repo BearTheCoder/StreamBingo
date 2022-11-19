@@ -1,10 +1,9 @@
 const nextStreamButton = document.getElementById('nextStreamButton');
 const resetStreamsButton = document.getElementById('resetStreamsButton');
-
-const defaultScreen = document.getElementById('twitch-embed').innerHTML;
-
 nextStreamButton.disabled = true;
 resetStreamsButton.disabled = true;
+
+const defaultScreen = document.getElementById('twitch-embed').innerHTML;
 
 let streamArray = [];
 let twitchPlayer = null;
@@ -89,6 +88,7 @@ function loadNextStream() {
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
     to ${streamArray[RandNum].viewer_count} viewers.`;
   twitchPlayer.setChannel(streamArray[RandNum].user_login);
+  console.log(`Stream Ended? ${twitchPlayer.getEnded()}`);
   if (twitchPlayer.getEnded()) {
     loadNextStream();
   }
@@ -101,5 +101,3 @@ function resetStreamHTML() {
   nextStreamButton.disabled = true;
   resetStreamsButton.disabled = true;
 }
-
-
