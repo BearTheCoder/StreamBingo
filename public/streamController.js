@@ -86,6 +86,7 @@ function loadNextStream() {
     to ${streamArray[RandNum].viewer_count} viewers.`;
   twitchPlayer.setChannel(streamArray[RandNum].user_name);
   console.log(twitchPlayer.isPaused());
+  console.log("Code Reaches here...");
   // if (twitchPlayer.isPaused()) {
   //   loadNextStream();
   // }
