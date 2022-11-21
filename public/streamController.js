@@ -75,14 +75,6 @@ function loadFirstStream() {
   document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${streamArray.length}`;
   document.getElementById("twitch-embed").innerHTML = '';
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
-
-
-  // if (twitchPlayer.isPaused()) {
-  //   loadNextStream();
-  // }
-
-
-
   nextStreamButton.disabled = false;
   resetStreamsButton.disabled = false;
 }
@@ -93,21 +85,10 @@ function loadNextStream() {
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
     to ${streamArray[RandNum].viewer_count} viewers.`;
   twitchPlayer.setChannel(streamArray[RandNum].user_name);
-
-
-  // document.getElementById("twitch-embed").innerHTML = '';
-  // twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_name });
-
-
   console.log(twitchPlayer.isPaused());
-
-
   // if (twitchPlayer.isPaused()) {
   //   loadNextStream();
   // }
-
-
-
 }
 
 function resetStreamHTML() {
