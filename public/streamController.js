@@ -77,14 +77,9 @@ function loadFirstStream() {
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
 
 
-
-  console.log(twitchPlayer.getPlaybackStats().playbackRate);
-
-  twitchPlayer.addEventListener("Twitch.Player.PLAYING", () => console.log(twitchPlayer.getPlaybackStats().playbackRate));
-
-  if (twitchPlayer.getEnded()) {
-    loadNextStream();
-  }
+  // if (twitchPlayer.isPaused()) {
+  //   loadNextStream();
+  // }
 
 
 
@@ -101,13 +96,12 @@ function loadNextStream() {
   twitchPlayer = new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_name });
 
 
-  console.log(twitchPlayer.getPlaybackStats().playbackRate);
+  console.log(twitchPlayer.isPaused());
 
-  twitchPlayer.addEventListener("Twitch.Player.PLAYING", () => console.log(twitchPlayer.getPlaybackStats().playbackRate));
 
-  if (twitchPlayer.getEnded()) {
-    loadNextStream();
-  }
+  // if (twitchPlayer.isPaused()) {
+  //   loadNextStream();
+  // }
 
 
 
