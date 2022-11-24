@@ -82,7 +82,7 @@ function loadFirstStream() {
 function loadNextStream() {
   let RandNum = Math.floor(Math.random() * streamArray.length);
   document.getElementById("LoadedUser").innerHTML =
-    `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
+    `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name}
     to ${streamArray[RandNum].viewer_count} viewers.`;
   twitchPlayer.setChannel(streamArray[RandNum].user_name);
   console.log(twitchPlayer.isPaused());
@@ -101,6 +101,11 @@ function resetStreamHTML() {
 }
 
 
-function testEvent() {
-
+function uploadImage() {
+  //Testing to see if railway can change dynamically with uploads
+  const fs = require('fs');
+  fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
 }
