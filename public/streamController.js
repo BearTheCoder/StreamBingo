@@ -103,9 +103,7 @@ function resetStreamHTML() {
 
 function uploadImage() {
   //Testing to see if railway can change dynamically with uploads
-  const fs = require('fs');
-  fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
-    if (err) throw err;
-    console.log('Saved!');
+  const file = new File(["foo"], "foo.txt", {
+    type: "text/plain",
   });
 }
