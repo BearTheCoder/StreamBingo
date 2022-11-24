@@ -99,11 +99,3 @@ function resetStreamHTML() {
   nextStreamButton.disabled = true;
   resetStreamsButton.disabled = true;
 }
-
-
-function uploadImage() {
-  //Testing to see if railway can change dynamically with uploads
-  const file = new File(["foo"], "foo.txt", {
-    type: "text/plain",
-  });
-}
