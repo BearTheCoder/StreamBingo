@@ -11,7 +11,7 @@ resetCardButton.disabled = true;
 
 let streamArray = [];
 
-function loadStreams() {
+function loadStreams () {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 1000000 : parseInt(document.getElementById('MaxViewCount').value);
   maxViewers >= 1 ? maxViewers : 1;
   const searchQuery = document.getElementById("CategoryInput").value;
@@ -57,7 +57,7 @@ function loadStreams() {
   }, 1000);
 };
 
-function loadNextStream() {
+function loadNextStream () {
   let RandNum = Math.floor(Math.random() * streamArray.length);
   document.getElementById("LoadedUser").innerHTML =
     `${streamArray[RandNum].user_name} is streaming ${streamArray[RandNum].game_name} 
@@ -66,13 +66,13 @@ function loadNextStream() {
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
 }
 
-function resetStreamHTML() {
+function resetStreamHTML () {
   document.getElementById("twitch-embed").innerHTML = defaultScreen;
   document.getElementById("LoadedUser").innerHTML = 'Load streams to get stream information.';
   document.getElementById("PageHeader").innerHTML = `Streams Loaded: 0`;
 }
 
-function generateRandomBingoCard() {
+function generateRandomBingoCard () {
   let bingoSquares = document.querySelectorAll("textarea");
   let duplicateArray = [];
   BingoCardDefaultOptions.forEach((option) => {
@@ -85,7 +85,7 @@ function generateRandomBingoCard() {
   });
 }
 
-function startBingoCard() {
+function startBingoCard () {
   const bingoSquares = document.querySelectorAll("textarea");
   const canStart = true;
   for (let node of bingoSquares) {
@@ -113,7 +113,7 @@ function startBingoCard() {
   }
 }
 
-function resetBingoCard() {
+function resetBingoCard () {
   const pArray = document.querySelectorAll("p");
   for (let node of pArray) {
     node.outerHTML = '<textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>';
