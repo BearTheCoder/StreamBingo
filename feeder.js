@@ -1,3 +1,10 @@
+/*
+  Originally the idea was to load the streams on the server every 30 minutes and keep a constant list of the live streams on the server and send the list to the client.
+  BUT, with no users, seemed unreasonable.
+  Instead, until I have a user base, there is a 90 second load time so the server can load streams.
+
+*/
+
 require('dotenv').config; //process.env.VARIABLE used for Railway deployment
 const express = require("express");
 const app = express();
@@ -13,7 +20,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
     streamArray: [],
     categories: [],
     stopLoading: false,
-    responseTime: 10000,
+    responseTime: 90000,
     pageNo: "",
   };
 
