@@ -13,7 +13,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
     streamArray: [],
     categories: [],
     stopLoading: false,
-    responseTime: 1000,
+    responseTime: 10000,
     pageNo: "",
   };
 
