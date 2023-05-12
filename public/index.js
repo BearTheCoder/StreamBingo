@@ -63,7 +63,7 @@ function fetchStreams(searchQuery) {
 function controlLoadingUI(loadTime) {
   resetStreamsButton.disabled = false;
   const timer = document.getElementById("twitch-embed");
-  timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
+  timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer"></h4>`;
   let tempTimer = document.getElementById('tempTimer');
   setInterval(() => {
     tempTimer.innerText = `Loading Streams ${loadTime--} seconds left...`;
