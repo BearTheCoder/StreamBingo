@@ -66,7 +66,12 @@ function controlLoadingUI(loadTime) {
   timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer"></h4>`;
   let tempTimer = document.getElementById('tempTimer');
   setInterval(() => {
-    tempTimer.innerText = `Loading Streams ${loadTime--} seconds left...`;
+    if (loadTime > 0) {
+      tempTimer.innerText = `Loading Streams ${loadTime--} seconds left...`;
+    }
+    else {
+      tempTimer.innerText = `WAITING ON SERVER! HELLO! WAKE UP!`;
+    }
   }, 1000);
 }
 
