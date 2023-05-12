@@ -14,8 +14,6 @@ app.use(express.json());
 
 app.post('/startStreams', (postRequest, postResponse) => {
 
-  console.log(postRequest.body);
-
   let feederObject = {
     request: postRequest,
     response: postResponse,
