@@ -15,7 +15,7 @@ function loadStreams() {
   streamArray = [];
   const searchQuery = getSearchQuery();
   fetchStreams(searchQuery);
-  controlLoadingUI(searchQuery.loadTime);
+  controlLoadingUI(JSON.parse(searchQuery.body).loadTime);
 };
 
 function getSearchQuery() {
