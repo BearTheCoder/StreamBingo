@@ -22,7 +22,7 @@ function getSearchQuery() {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 10000000 : parseInt(document.getElementById('MaxViewCount').value); // Handles no input
   maxViewers >= 1 ? maxViewers : 1; // Handles negative input
   const searchQuery = document.getElementById("CategoryInput").value;
-  const loadTime = int.parseInt(document.getElementById("loadTime"));
+  const loadTime = parseInt(document.getElementById("loadTime"));
   return {
     method: 'POST',
     headers: {
