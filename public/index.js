@@ -46,6 +46,7 @@ function fetchStreams(searchQuery) {
         loadedInfoNode.innerHTML = `${userName} is streaming ${gameName} to ${viewerCount} viewers.`;
         document.getElementById("twitch-embed").innerHTML = '';
         new Twitch.Player(document.getElementById("twitch-embed"), { channel: userName });
+        loadChat(userName);
         document.getElementById('PageHeader').innerHTML = `Streams Loaded: ${jsonResponse.streams.length}`;
         streamArray = jsonResponse.streams;
         nextStreamButton.disabled = false;
@@ -75,6 +76,12 @@ function loadNextStream() {
     to ${streamArray[RandNum].viewer_count} viewers.`;
   document.getElementById("twitch-embed").innerHTML = '';
   new Twitch.Player(document.getElementById("twitch-embed"), { channel: streamArray[RandNum].user_login });
+  loadChat(streamArray[RandNum].user_login)
+}
+
+function loadChat(channel) {
+  const chatEmbed = document.getElementById("chat_embed");
+  chatEmbed.src = `https://www.twitch.tv/embed/{channel}/chat?parent=streambingo.live/`
 }
 
 function resetStreamHTML() {
