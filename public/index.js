@@ -82,7 +82,7 @@ function loadNextStream() {
 function loadChat(channel) {
   const chatEmbed = document.getElementById("chat_embed");
   chatEmbed.innerHTML = "";
-  chatEmbed.src = `https://www.twitch.tv/embed/${channel}/chat?parent=streambingo.live/`;
+  chatEmbed.src = `https://www.twitch.tv/embed/${channel}/chat?parent=streambingo.live`;
 }
 
 function resetStreamHTML() {
