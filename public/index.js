@@ -15,21 +15,23 @@ function loadStreams() {
   streamArray = [];
   const searchQuery = getSearchQuery();
   fetchStreams(searchQuery);
-  controlLoadingUI();
+  controlLoadingUI(searchQuery.loadTime);
 };
 
 function getSearchQuery() {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 10000000 : parseInt(document.getElementById('MaxViewCount').value); // Handles no input
   maxViewers >= 1 ? maxViewers : 1; // Handles negative input
   const searchQuery = document.getElementById("CategoryInput").value;
+  const loadTime = int.parseInt(document.getElementById("loadTime"));
   return {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      maxViewers: maxViewers,
-      searchQuery: searchQuery,
+      maxViewers,
+      searchQuery,
+      loadTime,
     }),
   };
 }
@@ -58,14 +60,13 @@ function fetchStreams(searchQuery) {
     });
 }
 
-function controlLoadingUI() {
+function controlLoadingUI(loadTime) {
   resetStreamsButton.disabled = false;
-  let timeToLoad = 10;
   const timer = document.getElementById("twitch-embed");
   timer.innerHTML = `<img src="loading-gif.gif" width="100"/><h4 id="tempTimer">Loading Streams 90 seconds left...</h4>`;
   let tempTimer = document.getElementById('tempTimer');
   setInterval(() => {
-    tempTimer.innerText = `Loading Streams ${timeToLoad--} seconds left...`;
+    tempTimer.innerText = `Loading Streams ${loadTime--} seconds left...`;
   }, 1000);
 }
 
