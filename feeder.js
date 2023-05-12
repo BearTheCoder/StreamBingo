@@ -14,6 +14,7 @@ app.use(express.json());
 
 app.post('/startStreams', (postRequest, postResponse) => {
 
+  console.log(postRequest.body)
 
   let feederObject = {
     request: postRequest,
@@ -21,7 +22,7 @@ app.post('/startStreams', (postRequest, postResponse) => {
     streamArray: [],
     categories: [],
     stopLoading: false,
-    responseTime: parseInt(postRequest.body.loadTime),
+    responseTime: postRequest.body.loadTime,
     pageNo: "",
   };
 
