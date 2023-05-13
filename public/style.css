@@ -11,6 +11,39 @@ body {
   background-color: #131313;
 }
 
+.collapsed {
+  width: 800px;
+  height: 50px;
+  background-color: red;
+  border-radius: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.focused {
+  height: 710px;
+}
+
+.showing {
+  display: block;
+}
+
+#chat_embed {
+  width: 800px;
+  height: 700px;
+  margin-top: 10px;
+}
+
+#bingoDiv {
+  margin-top: 20px;
+}
+
+#chatDiv {
+  margin-top: 10px;
+}
+
 #container {
   display: flex;
   align-items: center;
