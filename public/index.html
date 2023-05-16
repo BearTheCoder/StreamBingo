@@ -24,9 +24,10 @@
         </div>
         <div id="twitch-embed">
           <div id="TE_Row0">
-            <label for="loadTime">Load Time in Seconds: </label>
+            <label for="loadTime">Search Time: </label>
             <input value="10" type="number" id="loadTime">
           </div>
+          <div id="HorizontalGap"></div>
           <div id="TE_Row1">
             <label for="MaxViewCount">Max Viewers: </label>
             <input placeholder="Leave blank for no filtering..." type="number" id="MaxViewCount">
@@ -58,19 +59,15 @@
 
       <div id="RightHand">
         <div id="chatDiv" class="focused">
+          <div id="chatVisibleFont">Show Chat</div>
           <div id="innerChatDiv" class="showing">
-            <iframe id="chat_embed" src=""></iframe>
+            <iframe id="chat_embed" src="">
+            </iframe>
           </div>
         </div>
         <div id="bingoDiv" class="collapsed">
+          <div id="bingoVisibleFont">Show Bingo Card</div>
           <div id="innerBingoDiv" class="hidden">
-            <!-- <div id="BingoHeader_Top">
-              <h3>B</h3>
-              <h3>I</h3>
-              <h3>N</h3>
-              <h3>G</h3>
-              <h3>O</h3>
-            </div> -->
             <div id="BingoHeader">
               <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>
               <textarea placeholder="Enter A Square" cols="13" rows="4" maxlength="55"></textarea>

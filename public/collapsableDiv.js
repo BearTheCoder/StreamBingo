@@ -3,7 +3,6 @@ const chatDiv = document.getElementById("chatDiv");
 const innerChatDiv = document.getElementById("innerChatDiv");
 const innerBingoDiv = document.getElementById("innerBingoDiv");
 
-
 bingoDiv.addEventListener("click", () => {
   bingoDiv.classList.add("focused");
   bingoDiv.classList.remove("collapsed");
@@ -13,6 +12,8 @@ bingoDiv.addEventListener("click", () => {
   innerChatDiv.classList.remove("showing");
   innerBingoDiv.classList.add("showing");
   innerBingoDiv.classList.remove("hidden");
+  document.getElementById("bingoVisibleFont").style.display = "none";
+  document.getElementById("chatVisibleFont").style.display = "flex";
 });
 
 chatDiv.addEventListener("click", () => {
@@ -24,4 +25,6 @@ chatDiv.addEventListener("click", () => {
   innerChatDiv.classList.remove("hidden");
   innerBingoDiv.classList.add("hidden");
   innerBingoDiv.classList.remove("showing");
+  document.getElementById("bingoVisibleFont").style.display = "flex";
+  document.getElementById("chatVisibleFont").style.display = "none";
 });

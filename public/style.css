@@ -97,6 +97,24 @@ iframe[title='Twitch'] {
   flex-direction: column;
 }
 
+#bingoVisibleFont {
+  display: flex;
+  font-size: 30px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+}
+
+#chatVisibleFont {
+  display: none;
+  font-size: 30px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+}
+
 h4 {
   color: lightgray;
   text-align: center;
