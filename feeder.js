@@ -76,11 +76,13 @@ function getStreams(feederObject, headers) {
       .then(dataObject => {
         for (let user of dataObject.data) {
           if (feederObject.categories.length !== 0) {
-            if (user.viewer_count <= feederObject.request.body.maxViewers && feederObject.categories.includes(user.game_name)) {
-              feederObject.streamArray.push(user);
+            if (user.viewer_count <= feederObject.request.body.maxViewers && user.viewer_count >= feederObject.request.body.minViewers) {
+              if (feederObject.categories.includes(user.game_name)) {
+                feederObject.streamArray.push(user);
+              }
             }
           }
-          else if (user.viewer_count <= feederObject.request.body.maxViewers) {
+          else if (user.viewer_count <= feederObject.request.body.maxViewers && user.viewer_count >= feederObject.request.body.minViewers) {
             feederObject.streamArray.push(user);
           }
         }

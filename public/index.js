@@ -21,6 +21,8 @@ function loadStreams() {
 function getSearchQuery() {
   const maxViewers = document.getElementById("MaxViewCount").value === "" ? 10000000 : parseInt(document.getElementById('MaxViewCount').value); // Handles no input
   maxViewers >= 1 ? maxViewers : 1; // Handles negative input
+  const minViewers = document.getElementById("MinViewCount").value === "" ? 1 : parseInt(document.getElementById('MinViewCount').value); // Handles no input
+  minViewers >= 1 ? minViewers : 1; // Handles negative input
   const searchQuery = document.getElementById("CategoryInput").value;
   const loadTime = parseInt(document.getElementById("loadTime").value);
   return {
@@ -30,6 +32,7 @@ function getSearchQuery() {
     },
     body: JSON.stringify({
       maxViewers,
+      minViewers,
       searchQuery,
       loadTime,
     }),
